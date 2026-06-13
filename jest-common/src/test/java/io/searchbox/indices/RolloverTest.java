@@ -1,16 +1,15 @@
 package io.searchbox.indices;
 
+import com.google.gson.Gson;
+import io.searchbox.client.config.ElasticsearchVersion;
+import org.junit.Test;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import org.junit.Test;
-
-import com.google.gson.Gson;
-
-import io.searchbox.client.config.ElasticsearchVersion;
 
 public class RolloverTest {
 
@@ -18,7 +17,6 @@ public class RolloverTest {
         new LinkedHashMap<String, Object>() {{
             put("max_age", "1d");
             put("max_docs", "10000");
-            
         }}
     );
 

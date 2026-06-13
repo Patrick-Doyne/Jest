@@ -1,10 +1,10 @@
 package io.searchbox.indices;
 
-import java.util.LinkedHashMap;
-
 import io.searchbox.action.AbstractAction;
 import io.searchbox.action.GenericResultAbstractAction;
 import io.searchbox.client.config.ElasticsearchVersion;
+
+import java.util.LinkedHashMap;
 
 public class Rollover extends GenericResultAbstractAction {
 
