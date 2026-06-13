@@ -1,11 +1,10 @@
 package io.searchbox.indices;
 
+import java.util.LinkedHashMap;
+
 import io.searchbox.action.AbstractAction;
 import io.searchbox.action.GenericResultAbstractAction;
 import io.searchbox.client.config.ElasticsearchVersion;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Rollover extends GenericResultAbstractAction {
 
@@ -15,7 +14,7 @@ public class Rollover extends GenericResultAbstractAction {
         super(builder);
 
         this.indexName = builder.index;
-        Map<String, Object> rolloverConditions = new HashMap<>();
+        LinkedHashMap<String, Object> rolloverConditions = new LinkedHashMap<>();
         if (builder.conditions != null) {
             rolloverConditions.put("conditions", builder.conditions);
         }

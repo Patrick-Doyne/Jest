@@ -1,25 +1,32 @@
 package io.searchbox.indices;
 
-import com.google.gson.Gson;
-import io.searchbox.client.config.ElasticsearchVersion;
-import org.elasticsearch.common.collect.MapBuilder;
-import org.junit.Test;
-
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
+
+import com.google.gson.Gson;
+
+import io.searchbox.client.config.ElasticsearchVersion;
 
 public class RolloverTest {
 
-    Map<String, Object> rolloverConditions = new MapBuilder<String, Object>()
-                    .put("max_docs", "10000")
-                    .put("max_age", "1d")
-                    .immutableMap();
-    Map<String, Object> rolloverSettings = new MapBuilder<String, Object>()
-            .put("index.number_of_shards", "2")
-            .immutableMap();
+    Map<String, Object> rolloverConditions = Collections.unmodifiableMap(
+        new LinkedHashMap<String, Object>() {{
+            put("max_age", "1d");
+            put("max_docs", "10000");
+            
+        }}
+    );
 
+    Map<String, Object> rolloverSettings = Collections.unmodifiableMap(
+        new LinkedHashMap<String, Object>() {{
+            put("index.number_of_shards", "2");
+        }}
+    );
 
     @Test
     public void testBasicUriGeneration() {
@@ -34,7 +41,7 @@ public class RolloverTest {
         Rollover rollover = new Rollover.Builder("twitter").conditions(rolloverConditions).settings(rolloverSettings).build();
         assertEquals("POST", rollover.getRestMethodName());
         assertEquals("twitter/_rollover", rollover.getURI(ElasticsearchVersion.UNKNOWN));
-        assertEquals("{\"settings\":{\"index.number_of_shards\":\"2\"},\"conditions\":{\"max_age\":\"1d\",\"max_docs\":\"10000\"}}", rollover.getData(new Gson()));
+        assertEquals("{\"conditions\":{\"max_age\":\"1d\",\"max_docs\":\"10000\"},\"settings\":{\"index.number_of_shards\":\"2\"}}", rollover.getData(new Gson()));
     }
 
     @Test
