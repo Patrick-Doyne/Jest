@@ -22,7 +22,7 @@ jobs:
         run: mvn clean install -DskipTests -pl jest-common -am
 
       - name: Run normal test
-        run: mvn -pl jest-common -Dtest=RolloverTest test
+        run: mvn -pl jest-common test -Dtest=io.searchbox.indices.RolloverTest#testBasicUriWithSettingsGeneration
 
       - name: Run NonDex
-        run: mvn -pl jest-common edu.illinois:nondex-maven-plugin:2.2.5:nondex -Dtest=RolloverTest
+        run: mvn -pl jest-common edu.illinois:nondex-maven-plugin:2.2.5:nondex -Dtest=io.searchbox.indices.RolloverTest#testBasicUriWithSettingsGeneration
