@@ -1,0 +1,28 @@
+name: Confirm Flaky Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  nondex-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Build jest-common without tests
+        run: mvn clean install -DskipTests -pl jest-common -am
+
+      - name: Run normal test
+        run: mvn -pl jest-common -Dtest=RolloverTest test
+
+      - name: Run NonDex
+        run: mvn -pl jest-common edu.illinois:nondex-maven-plugin:2.2.5:nondex -Dtest=RolloverTest
